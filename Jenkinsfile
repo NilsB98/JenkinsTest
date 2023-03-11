@@ -12,13 +12,13 @@ pipeline {
         stage('Build') {
             steps {
                 echo "${WORKSPACE}"
-                bat "./mvnw compile"
+                sh "./mvnw compile"
             }
         }
         stage('Test') {
             steps {
                 echo 'Test!'
-                bat "./mvnw test"
+                sh "./mvnw test"
 
                 // sh "./mvnw test"
             }
@@ -26,7 +26,7 @@ pipeline {
         stage('Package') {
             steps {
                 echo 'Package!'
-                bat "./mvnw package"
+                sh "./mvnw package"
             }
         }
         stage('Deploy') {
@@ -48,7 +48,8 @@ pipeline {
             echo 'This will run only if successful'
         }
         failure {
-            mail bcc: '', body: "<b>Example</b><br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "ERROR CI: Project name -> ${env.JOB_NAME}", to: "foo@foomail.com";
+//             mail bcc: '', body: "<b>Example</b><br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "ERROR CI: Project name -> ${env.JOB_NAME}", to: "foo@foomail.com";
+            echo 'Build failure'
         }
         unstable {
             echo 'This will run only if the run was marked as unstable'
